@@ -1,0 +1,8 @@
+name: dog-breed-classifier-webservice-env
+dependencies:
+  - conda=4.10.*
+  - python=3.9.*
+  - pip=21.2.*
+  - pip:
+    - --extra-index-url https://test.pypi.org/simple/ 
+    - dog-breed-classifier==0.0.6
