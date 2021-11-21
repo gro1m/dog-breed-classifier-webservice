@@ -31,7 +31,7 @@ from flask_wtf.file import (
 
 from werkzeug.utils import secure_filename
 
-from dog_breed_classifier import predict
+from dog_breed_classifier.app import predict
 
 # References:
 # https://hackersandslackers.com/flask-wtforms-forms/
