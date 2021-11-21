@@ -5,9 +5,9 @@ dependencies:
   - pip=21.2.*
   - pip:
     - --extra-index-url https://test.pypi.org/simple/ 
-    - dog-breed-classifier==0.0.8
+    - dog_breed_classifier==0.0.9
     - flask==2.0.*
     - flask-restx==0.5.*
     - Flask-WTF==1.0.*
     - Flask-Reuploaded==1.2.*
-    - pylint==2.11.*
+    - pylint==2.10.*
