@@ -15,16 +15,17 @@
       Upload Image of a Dog 
       </h2>
 
-      <form method="POST" action="{{ url_for('upload') }}">
-
+      <form method="POST" action="{{ url_for('upload') }} enctype="multipart/form-data">
+             {{ form.csrf_token }}
+             
           <fieldset class="form-field">
-              {{ form.upload.label }}
-              {{ form.upload(size=20) }}
+              {{ form.photo.label }}
+              {{ form.photo(size=20) }}
           </fieldset>
 
-          {% if form.upload.errors %}
+          {% if form.photo.errors %}
             <ul class="errors">
-            {% for error in form.upload.errors %}
+            {% for error in form.photo.errors %}
                 <li>
                     {{ error }}
                 </li>

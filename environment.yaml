@@ -11,3 +11,4 @@ dependencies:
     - Flask-WTF==1.0.*
     - Flask-Reuploaded==1.2.*
     - pylint==2.10.*
+    - requests
