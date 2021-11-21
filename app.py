@@ -4,9 +4,9 @@ from flask import (
     Flask, 
     request, 
     redirect,
-     jsonify, 
-     url_for, 
-     render_template
+    jsonify, 
+    url_for, 
+    render_template
 )
 
 from flask_restx import (
