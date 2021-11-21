@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<body class="{{ template }}">
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+{% block content %}
+
+    <div class="form-wrapper">
+      <h2 class="title"> 
+      Upload Image of a Dog 
+      </h2>
+
+      <form method="POST" action="{{ url_for('upload') }}">
+
+          <fieldset class="form-field">
+              {{ form.upload.label }}
+              {{ form.upload(size=20) }}
+          </fieldset>
+
+          {% if form.upload.errors %}
+            <ul class="errors">
+            {% for error in form.upload.errors %}
+                <li>
+                    {{ error }}
+                </li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+
+          {{ form.submit }}
+
+      </form>
+
+      <h2 class="title"> 
+      Prediction of Dog Breed: {{ detection }}
+      </h2>
+
+
+    </div>
+
+{% endblock %}
+
+</body>
+
+</html>
