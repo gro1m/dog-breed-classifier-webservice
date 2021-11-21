@@ -56,9 +56,6 @@ app.config['UPLOADED_IMAGES_DEST']=os.path.join(app.instance_path, 'photos')
 images = UploadSet('images', IMAGES)
 configure_uploads(app, images)
 
-
-
-
 api = Api(app)
 
 class UploadForm(FlaskForm):
@@ -119,6 +116,8 @@ class Image(Resource):
         print("f")
         filename = secure_filename(f.filename)
         file_destination_path = os.path.join(app.config['UPLOADED_IMAGES_DEST'], filename)
+        if not os.path.exists(app.config['UPLOADED_IMAGES_DEST']):
+            os.makedirs(app.config['UPLOADED_IMAGES_DEST'])
         f.save(file_destination_path)
         print(f"File Destination Path: {file_destination_path}")
         detection = predict(file_destination_path)
