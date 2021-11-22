@@ -66,15 +66,11 @@ upload_parser.add_argument('file',
                            type=FileStorage)
 
 class UploadForm(FlaskForm):
-    email = StringField('email', validators=[])
     # Image Upload Form 
     photo = FileField(validators=[
         FileRequired(),
         FileAllowed(images, 'Images only!')
     ])
-
-    ''' Submit Field '''
-    submit = SubmitField('Predict Dog Breed')
 
 class Image(Resource):
     def check_session(self):
@@ -87,10 +83,6 @@ class Image(Resource):
         return message
     @api.expect(upload_parser)
     def post(self):
-        print(request.data)
-        print(request.form)
-        print(request.files.get('file'))
-        print(request.files)
         file_=request.files['file']
         filenames = file_.filename
         print(request.url)
