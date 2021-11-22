@@ -79,26 +79,10 @@ class Image(Resource):
         message += "session['csrf_token'] is {}<br>".format(session.get('csrf_token'))
         return message
     def post(self):
-        '''
-        files = request.files.getlist("files[]")
-        
-        print("List of files", files, request.files)
-        
-        for f in request.files.getlist('image'):
-            print("A")
-            # filename = secure_filename(f.filename)
-            # print("B")
-            # file_destination_path = os.path.join(app.instance_path, 'photos', filename)
-            # f.save(file_destination_path)
-            # print("C")
-            detection = predict(f)
-            print("D")
-            print(f"detection string = {detection}")
-        return {'Files uploaded': len(files)}
-        '''
         print(request.data)
         print(request.form)
         print(request.files)
+        print(request.url)
         form = UploadForm(request.files, csrf_enabled=False)
         print(f"Uploaded Form: {request.form}")
         print(form.data)
@@ -126,7 +110,6 @@ class Image(Resource):
         else:
             print(f"Errors: {form.errors}")
             '''
-        return render_template("imageupload.jinja2", form=form, template="form-template", detection=detection)
-        #detection=detection, file_destination_path=file_destination_path) #redirect(request.referrer)
+        return render_template("imageupload.jinja2", form=form, template="form-template", detection=detection, url=request.url)
 
 api.add_resource(Image, "/upload")
