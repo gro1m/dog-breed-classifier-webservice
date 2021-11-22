@@ -38,6 +38,8 @@ from flask_wtf.file import (
 
 from werkzeug.utils import secure_filename
 
+from werkzeug.datastructures import FileStorage
+
 from dog_breed_classifier.app import predict
 
 # References:
@@ -58,6 +60,11 @@ configure_uploads(app, images)
 
 api = Api(app)
 
+upload_parser = api.parser()
+upload_parser.add_argument('file', 
+                           location='files',
+                           type=FileStorage)
+
 class UploadForm(FlaskForm):
     email = StringField('email', validators=[])
     # Image Upload Form 
@@ -67,7 +74,7 @@ class UploadForm(FlaskForm):
     ])
 
     ''' Submit Field '''
-    #submit = SubmitField('Predict Dog Breed')
+    submit = SubmitField('Predict Dog Breed')
 
 class Image(Resource):
     def check_session(self):
@@ -78,10 +85,14 @@ class Image(Resource):
         message += "session['secret'] is {}<br>".format(session.get('secret'))
         message += "session['csrf_token'] is {}<br>".format(session.get('csrf_token'))
         return message
+    @api.expect(upload_parser)
     def post(self):
         print(request.data)
         print(request.form)
+        print(request.files.get('file'))
         print(request.files)
+        file_=request.files['file']
+        filenames = file_.filename
         print(request.url)
         form = UploadForm(request.files, csrf_enabled=False)
         print(f"Uploaded Form: {request.form}")
@@ -92,17 +103,11 @@ class Image(Resource):
         message = self.check_session()
         print(f"message = {message}")
 
-        print("In Validation")
-        print(form.email.data)
-        print(form.photo.data)
-        f = form.photo.data
-        print(form.photo)
-        print("f")
-        filename = secure_filename(f.filename)
+        filename = secure_filename(filenames)
         file_destination_path = os.path.join(app.config['UPLOADED_IMAGES_DEST'], filename)
         if not os.path.exists(app.config['UPLOADED_IMAGES_DEST']):
             os.makedirs(app.config['UPLOADED_IMAGES_DEST'])
-        f.save(file_destination_path)
+        file_.save(file_destination_path)
         print(f"File Destination Path: {file_destination_path}")
         detection = predict(file_destination_path)
         print(f"detection string = {detection}")
